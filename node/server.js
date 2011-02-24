@@ -22,7 +22,6 @@ var sys = require('sys'),
 	rdir = /\/$/, rstart = /^[^\/]/;
 
 
-
 /*
 	Socket
 */
@@ -132,7 +131,7 @@ sys.puts('Master Controller Enabled at http://localhost:' + Config.masterport + 
 
 
 /* Reading Max Slides */
-fs.readFile( __dirname + '/../slideshow/index.html', 'utf-8', function( e, data ) {
+fs.readFile( __dirname + '/../' + Config.slideshowName + '/index.html', 'utf-8', function( e, data ) {
 	Info.max = data.match( /<section[> ]/g ).length;
 	sys.puts( Info.max + ' Slides');
 });

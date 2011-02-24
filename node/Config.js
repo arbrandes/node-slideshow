@@ -3,7 +3,15 @@
  * [DATE]
  * Corey Hart @ http://www.codenothing.com
  */
-this.Config = require('../slideshow/Config').Config;
+// pick up slideshow
+var slideshowName = process.argv[2];
+if ( slideshowName === undefined ) { slideshowName = 'slideshow' };
+console.log( 'loading config for ' + slideshowName );
+
+this.Config = require('../' + slideshowName + '/Config').Config;
+
+// set slideshowName
+this.Config.slideshowName = slideshowName;
 
 // Port for master server
 this.Config.masterport = 8008;
