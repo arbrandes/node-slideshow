@@ -1,178 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Example Slideshow</title>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" href="styles.css" />
-	<script type='text/javascript' src="jquery-1.4.2.js"></script>
-	<script type='text/javascript' src="Config.js"></script>
-	<script type='text/javascript' src="js.js"></script>
-	<script type='text/javascript' src="jquery.chili.js"></script>
+  <title>Example Slideshow</title>
+  <meta charset="utf-8" />
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+  
+  <style type="text/css">
+    .syntaxhighlighter {
+      border:2px solid #c00;
+      font-size:200% !important;
+    }
+  </style>
 </head>
 <body>
 <div id='deck'>
 
 <!--
-Node Slideshow [VERSION]
-[DATE]
-Corey Hart @ http://www.codenothing.com
+Socket.IO + Node Slideshow Credits
+
+[Guillermo Rauch](http://devthought.com/) - Socket.IO
+[Corey Hart](http://codenothing.com) - Original Websocket + Node Slideshow integration
+[Rob Flaherty](http://www.ravelrumba.com) - Original Slideshow
+[Hiroshi Ichikawa](http://github.com/gimite/web-socket-js) - Node.js Websocket
+[Alex Gorbathev](http://alexgorbatchev.com) - SyntaxHighlighter
+[Jon Fuller](http://erg7.com) - Socket.IO + Node Slideshow integration
 -->
 
 
 <!-- Intro Slide -->
 <section>
-	<hgroup>
-		<h1>Node Slideshow</h1>
-		<h2>Web Based Slideshow</h2>
-	</hgroup>
-	<ul>
-		<li>Integrated by <a target='_blank' href='http://www.codenothing.com'>Corey Hart</a></li>
-		<li>Original Slideshow work done by <a target='_blank' href='http://www.ravelrumba.com/blog/html5-slideshow/'>Rob Flaherty</a></li>
-		<li>Node.js Web Socket work done by <a target='_blank' href='http://github.com/gimite/web-socket-js'>Hiroshi Ichikawa</a></li>
-		<li>Syntax Highlighting [ <a href='http://github.com/aercolino/Chili'>jQuery Chili NEXT</a> ] work done by <a target='_blank' href='http://noteslog.com/'>Andrea Ercolino</a></li>
-	</ul>
+  <hgroup>
+    <h1>Node Slideshow</h1>
+  </hgroup>
+
+  <p>
+    Node Slideshow is based on HTML5 and jQuery. 
+  </p>
+
+  <p>
+    The information for each slide is contained inside <em>section</em> elements embedded in the slideshow HTML document. jQuery is then applied to give that document the behavior of a typical slide presentation when viewed in a web browser.
+  </p>
+  
+  <h2>Controlling Slideshow</h2>
+  <p>
+    Viewers of the slideshow have their own personal keyboard controls.<br>
+    <u>Next Slide</u>: Right Arrow, Spacebar, Enter.<br>
+    <u>Previous Slide</u>: Left Arrow &amp; Backspace.<br>
+  </p>
 </section>
-
-
-
 
 
 <!-- Code Blocks -->
 <section>
-	<hgroup>
-		<h1>Code Blocks</h1>
-	</hgroup>
+  <hgroup>
+    <h1>Code Blocks</h1>
+  </hgroup>
 
-	<p>
-		Node Slideshow comes with the <a target='_blank' href='http://noteslog.com/chili/'>jQuery Chili Plugin</a> built in.
-		You can check the <a target='_blank' href='recipes/'>recipe folder</a> for language support.
-	</p>
+  <p>
+    Node Slideshow comes with Alex Gorbatchev's <a target='_blank' href='http://alexgorbatchev.com/SyntaxHighlighter/'>SyntaxHighlighter</a> built in.
+  </p>
 
-	<p><b>Javascript</b></p>
-	<pre class='chili-lang-js'>
+  <p><b>Javascript</b></p>
+  <pre class='brush: js; gutter: true;'>
 window.onload = function(){
-	alert('Hello World!');
+  alert('Hello, World!');
 };</pre>
 
-	<br>
+  <br>
 
-	<p><b>PHP</b></p>
-	<pre class='chili-lang-php'>echo '&lt;p&gt;Hello World!&lt;/p&gt;'</pre>
+  <p><strong>Ruby</strong></p>
+  <pre class='brush: ruby; gutter: true;'>
+    puts "Hello, World!"
+  </pre>
 
-	<br>
+  <br>
 
-	<p><b>MySQL</b></p>
-	<pre class='chili-lang-mysql'>INSERT INTO `messages` VALUE ('Hello World!');</pre>
+  <p><b>PHP</b></p>
+  <pre class='brush: php; gutter: true;'>
+    echo '&lt;p&gt;Hello, World!&lt;/p&gt;'
+  </pre>
+
+  <br>
+
+  <p><b>MySQL</b></p>
+  <pre class='brush: plain; gutter: true;'>
+    INSERT INTO `messages` VALUE ('Hello World!');
+  </pre>
 </section>
-
-
 
 
 <!-- Images -->
 <section>
-	<hgroup>
-		<h1>Working With Images</h1>
-	</hgroup>
-	<img align='left' src='images/hwy1.png' />
-	<p>
-		This image was taken off the coast of California in a cliff side rest stop on Highway 1.<br><br>
-		<i>Corey Hart - June 2008</i>
-	</p>
+  <hgroup>
+    <h1>Working With Images</h1>
+  </hgroup>
+  <img align='left' src='images/hwy1.png' />
+  <p>
+    This image was taken off the coast of California in a cliff side rest stop on Highway 1.<br><br>
+    <i>Corey Hart - June 2008</i>
+  </p>
 </section>
-
-
-
-
-<!-- Embed Scripts -->
-<section>
-	<hgroup>
-		<h1>Embeding Videos</h1>
-		<h2>Hello Youtube</h2>
-	</hgroup>
-	<p>...embed code here...</p>
-</section>
-
-
-
-
-<!-- Master Controller -->
-<section>
-	<hgroup>
-		<h1>Master Controller</h1>
-		<h2>Controlling the Slideshow</h2>
-	</hgroup>
-
-	<p>
-		The Master Controller was built for mobile devices, but will work within browsers as well.
-		To enable it, run the server.sh shell script provided.
-	</p>
-
-	<pre>
-$ cd node-slideshow
-$ ./server.sh
-Socket created on port 8124
-Master Controller Enabled at http://localhost:8125/
-10 Slides</pre>
-
-	<br><br>
-	<p>
-		The stdout tells us a few things:
-	</p>
-
-	<ul>
-		<li>The Socket Port that all slideshows connect to is (8124)</li>
-		<li>To use the Master Controller, go to <a target='_blank' href='http://localhost:8125/'>http://localhost:8125/</a>
-		<li>There are 12 Total Slides in your presentation</li>
-	</ul>
-</section>
-
-
-
-
-
-<!-- Presentation Timer -->
-<section>
-	<hgroup>
-		<h1>Presentation Timer</h1>
-	</hgroup>
-
-	<p>
-		The master controller also comes with a countdown timer to keep track of time left during a presentation.
-		To enable, you need to run the starttime.sh shell script in the root directory.
-	</p>
-	<p>
-		<b>Note*:</b> This must be done <i>after</i> the server has started.
-	</p>
-	<img src='images/ptimer.png' align='right' />
-	<pre>
-$ cd node-slideshow
-$ ./starttime.sh
-Presentation Timer Started - 45:00 left</pre>
-	<br>
-</section>
-
-
 
 
 <!-- Exporting -->
 <section>
-	<hgroup>
-		<h1>Exporting Slideshow</h1>
-		<h2>Mr. Independent</h2>
-	</hgroup>
+  <hgroup>
+    <h1>Mr. Independence</h1>
+  </hgroup>
 
-	<p>
-		User's viewing the slideshow have their own personal keyboard controls.<br>
-		<u>Next Slide</u>: Right Arrow, Spacebar, Enter.<br>
-		<u>Previous Slide</u>: Left Arrow &amp; Backspace.<br>
-	</p>
+  <p>
+    The slideshow/ directory is completely independent from the rest of the project, so it can be zipped up and passed around as needed.
+  </p>
 
-	<p>
-		The slideshow/ directory is also completely independent from the rest of the project, so it can be zipped up
-		and passed around as needed.
-	</p>
+  <h2>Package the Slideshow</h2>
+  <ol>
+    <li>Open Config.js and ensure enableSocket is set to 'false'.</li>
+    <li>Zip the slideshow directory.</li>
+  </ol>
 
-	<pre class='smallprint'>
+  <pre class='brush: plain; gutter: true;'>
 $ cd node-slideshow
 $ zip -r slideshow.zip slideshow/
   adding: slideshow/ (stored 0%)
@@ -181,96 +132,39 @@ $ zip -r slideshow.zip slideshow/
   adding: slideshow/fonts/Chunkfive-webfont.eot (deflated 37%)
   adding: slideshow/fonts/Chunkfive-webfont.svg (deflated 61%)
   ...
-$ ls
-master        node          revar.sh      server.sh     slideshow     <b style='color: blue;'>slideshow.zip</b> starttime.sh</pre>
+  </pre>
 </section>
 
 
-
-<!-- Slideshow Configuration -->
+<!-- Credits -->
 <section>
-	<hgroup>
-		<h1>Slidshow Config</h1>
-		<h2>slideshow/Config.js</h2>
-	</hgroup>
-
-	<pre class='smallprint chili-lang-js'>
-/**
- * Node Slideshow [VERSION]
- * [DATE]
- * Corey Hart @ http://www.codenothing.com
- */
-this.Config = {
-	// Disable for distribution, and final check for websocket
-	enableSocket: true &amp;&amp; ( 'WebSocket' in this ),
-
-	// Websocket connection
-	host: 'localhost',
-	port: 8124,
-
-	// Time takes to transition between slides
-	transitions: 200
-};</pre>
-	<br>
-	<ul>
-		<li><b>enableSocket:</b> Enables use of Web Socket API on the browser (and only if the browser is capable)</li>
-		<li><b>host:</b> Host of the Socket Connection</li>
-		<li><b>port:</b> Port of the Socket Connection</li>
-		<li><b>transitions:</b> Animation time for slide transition.</li>
-	</ul>
+  <hgroup>
+    <h1>Socket.IO + Node Slideshow</h1>
+    <h2>Credits</h2>
+  </hgroup>
+  <ul>
+    <li>Socket.IO by <a target="_blank" href="http://devthought.com">Guillermo Rauch</a></li>
+    <li>Original Node.js Web Socket + Slideshow integration by <a target='_blank' href='http://www.codenothing.com'>Corey Hart</a></li>
+    <li>Original Slideshow work done by <a target='_blank' href='http://www.ravelrumba.com/blog/html5-slideshow/'>Rob Flaherty</a></li>
+    <li>Node.js Web Socket work done by <a target='_blank' href='http://github.com/gimite/web-socket-js'>Hiroshi Ichikawa</a></li>
+    <li>SyntaxHighlighter by <a target="_blank" href="http://alexgorbatchev.com">Alex Gorbatchev</a></li>
+    <li>Socket.IO + Node Slideshow integration by <a target="_blank" href="http://erg7.com">Jon Fuller</a></li>
+  </ul>
+  
+  <p>
+    Note: This version of Node Slideshow uses <a href="http://code.google.com/p/html5shim/">html5shim</a> to support Internet Explorer. Integrated libraries were altered to ensure Internet Explorer was usable as a target environment.
+  </p> 
 </section>
-
-
-
-<!-- Master Configuration -->
-<section>
-	<hgroup>
-		<h1>Master Config</h1>
-		<h2>master/Config.js</h2>
-	</hgroup>
-
-	<pre class='smallprint chili-lang-js'>
-/**
- * Node Slideshow [VERSION]
- * [DATE]
- * Corey Hart @ http://www.codenothing.com
- */
-this.Config = require('../slideshow/Config').Config;
-
-// Port for master server
-this.Config.masterport = 8125;
-
-// Time (in milliseconds) for countdown timer
-this.Config.timed = 45 * 60 * 1000;
-
-// When to turn on warning color for countdown timer (in milliseconds)
-this.Config.timeWarning = 15 * 60 * 1000;</pre>
-	<br>
-	<ul>
-		<li><b>masterport:</b> Port of the Master Controller</li>
-		<li><b>timed:</b> For timing a presentation. Set the time limit (in milliseconds) here, and run starttime.sh (after server.sh)</li>
-		<li><b>timeWarning:</b> For when countdown timer is enabled, will switch the timer color to yellow at this mark.</li>
-	</ul>
-</section>
-
-
-<section>
-	<hgroup>
-		<h1>Contact Info</h1>
-	</hgroup>
-
-	<p>
-		Thanks for your interest. Please send all feedback or questions to <a href='mailto:corey@codenothing.com'>corey@codeNothing.com</a>.
-	</p>
-
-	<p>
-		You can also tweet me: <a href='https://twitter.com/codeNothing'>@codeNothing</a>.
-	</p>
-</section>
-
-
-
 
 </div>
+  
+<script type='text/javascript' src="./scripts/jquery-1.5.1.js"></script>
+<script type='text/javascript' src="Config.js"></script>
+<script type='text/javascript' src="./scripts/js-io.js"></script>
+<script type='text/javascript' src="./scripts/json.js"></script>
+
+<!-- load syntaxhighlighter stylesheets and code -->
+<script src="scripts/sh.js"></script>
+
 </body>
 </html>

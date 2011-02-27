@@ -4,13 +4,13 @@
  * Corey Hart @ http://www.codenothing.com
  */
 this.Config = {
-	// Disable for distribution, and final check for websocket
-	enableSocket: true && ( 'WebSocket' in this ),
+  // disable enableSocket for standalone distribution
+  enableSocket: true
 
-	// Websocket connection
-	host: 'localhost',
-	port: 8080,
+  // configure host and port
+, host: 'localhost'
+, port: 8080
 
-	// Time takes to transition between slides
-	transitions: 200
+  // ms between slide transitions
+, transitions: 200
 };
