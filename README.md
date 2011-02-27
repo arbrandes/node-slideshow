@@ -1,4 +1,4 @@
-[Socket.IO + Node Slideshow]
+Socket.IO + Node Slideshow
 ===========================
 
 ## DESCRIPTION
@@ -14,23 +14,23 @@ This is a fork of Corey Hart's [Node Slideshow](http://www.codenothing.com/archi
 2. Checkout Socket.IO + Node Slideshow.
 3. Start the node server:
 
-  $ ./server.sh
+> ./server.sh
 
 By default, the slideshow in the /slideshow directory will be served.
 
 To serve another directory, pass the name of the directory as the second argument to the server.sh script:
 
-  $ ./server.sh foobarbaz
+> ./server.sh foobarbaz
 
 To demo the control function:
 
 1. Open the slideshow url in a browser:
 
-  $ http://localhost:8080/index.html
+> http://localhost:8080/index.html
 
 2. Open the slideshow admin url in a separate browser:
 
-  $ http://localhost:8080/index.html?admin=true
+> http://localhost:8080/index.html?admin=true
 
 Changing the slide viewed in the admin instance will cause the non-admin instance to also change.
 
