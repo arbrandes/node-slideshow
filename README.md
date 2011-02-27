@@ -31,7 +31,7 @@ http://localhost:8080/index.html?admin=true
 
 Changing the slide viewed in the admin instance will cause the non-admin instance to also change.
 
-This version of Socket.IO + Node Slideshow also integrates the alpha version of jQuery Mobile and has limited support of iOS swipe left and swipe right gestures. 
+Internet Explorer 8 is supported via [html5shim](http://code.google.com/p/html5shim/). This version of Socket.IO + Node Slideshow also integrates the alpha version of jQuery Mobile and has limited support of iOS swipe left and swipe right gestures. 
 
 
 Credits
