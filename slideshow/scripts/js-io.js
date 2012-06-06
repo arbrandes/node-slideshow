@@ -160,11 +160,21 @@ jQuery(function(){
     if ( Config.enableSocket ) {
 
       var socket = null;
+      var socket_host = '';
+
+      if (Config.host) {
+          socket_host = 'http://' + Config.host;
+          if (Config.port) {
+              socket_host += ':' + Config.port;
+          }
+      } else if (Config.port) {
+          socket_host = 'http://' + window.location.hostname + ':' + Config.port;
+      }
 
       // load socket.io libs
-      $.getScript('/socket.io/socket.io.js', function() {
+      $.getScript(socket_host + '/socket.io/socket.io.js', function() {
         // Connect
-        socket = io.connect();
+        socket = io.connect(socket_host);
 
         // close connection 
         socket.on('close', function() {

@@ -6,10 +6,6 @@ var http = require('http')
   , sys = require(process.binding('natives').util ? 'util' : 'sys')
   , Config = require('./Config').Config
   , Info = {
-      timeLeft: Config.timed,
-      timeWarning: Config.timeWarning,
-      timeEnd: 0,
-      timeEnabled: false,
       slide: 0,
       max: 0
     }

@@ -8,7 +8,7 @@ this.Config = {
   enableSocket: true
 
   // configure host and port
-, host: 'localhost'
+, host: null
 , port: 8080
 
   // ms between slide transitions
