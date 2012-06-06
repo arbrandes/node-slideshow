@@ -5,6 +5,6 @@
 # Corey Hart @ http://www.codenothing.com
 #
 
-p1=$1 # capture slideshowName
+SLIDESHOW=${1:-slideshow}
 
-node node/socket-io-server.js $p1
+node node/server.js ${SLIDESHOW}

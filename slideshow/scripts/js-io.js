@@ -62,7 +62,7 @@ jQuery(function(){
 
       // if admin, treat as controller
       if (socket && isAdmin) {
-        socket.send({slide:slide});
+        socket.json.send({slide:slide});
       }
     }
 
@@ -102,7 +102,7 @@ jQuery(function(){
         });
       });
 
-      $.getScript('./scripts/jquery.mobile-1.0a3.min.js', function() {
+      $.getScript('./scripts/jquery.mobile-1.0.1.min.js', function() {
         
         // set up swipe events
         $(document).swipeleft(function( event ) {
@@ -162,15 +162,9 @@ jQuery(function(){
       var socket = null;
 
       // load socket.io libs
-      $.getScript('./scripts/socket.io.js', function() {
-
-        // using socket.IO instead of websockets
-        // for cross-browser support
-        socket = new io.Socket(
-            null
-          , {port: 8080, rememberTransport: false}
-        );
-        socket.connect();
+      $.getScript('/socket.io/socket.io.js', function() {
+        // Connect
+        socket = io.connect();
 
         // close connection 
         socket.on('close', function() {

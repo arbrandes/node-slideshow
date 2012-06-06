@@ -1,137 +1,95 @@
-/**
- * Node Slideshow [VERSION]
- * [DATE]
- * Corey Hart @ http://www.codenothing.com
- */
-var sys = require('sys'),
-	http = require('http'),
-	fs = require('fs'),
-	querystring = require('querystring'),
-	ws = require('./ws'),
-	Config = require('./Config').Config,
-	server = ws.createServer(),
-	Info = {
-		timeLeft: Config.timed,
-		timeWarning: Config.timeWarning,
-		timeEnd: 0,
-		timeEnabled: false,
-		slide: 0,
-		max: 0
-	},
-	stack = {},
-	rdir = /\/$/, rstart = /^[^\/]/;
+var http = require('http')
+  , url = require('url')
+  , fs = require('fs')
+  , querystring = require('querystring')
+  , io = require('socket.io')
+  , sys = require(process.binding('natives').util ? 'util' : 'sys')
+  , Config = require('./Config').Config
+  , Info = {
+      timeLeft: Config.timed,
+      timeWarning: Config.timeWarning,
+      timeEnd: 0,
+      timeEnabled: false,
+      slide: 0,
+      max: 0
+    }
+  , stack = {}
+  , rdir = /\/$/
+  , rstart = /^[^\/]/
+  , slideshowServer;
 
 
-/*
-	Socket
-*/
-server.addListener("connection", function( conn ) {
-	sys.puts( 'Connection Created [id:' + conn.id + '] [time:' + Date.now() + ']' );
-	conn.write(
-		JSON.stringify({
-			slide: Info.slide
-		})
-	);
-	stack[ conn.id ] = conn;
+send404 = function(res){
+  res.writeHead(404);
+  res.write('404');
+  res.end();
+};
+
+
+// socket
+slideshowServer = http.createServer(function(req, res){
+  var path = url.parse(req.url).pathname;
+  sys.puts(path);
+      
+  var fileName = './' + Config.slideshowName + path;
+  sys.puts(fileName);
+
+  fs.readFile(fileName, function(err, data) {
+    if (err) return send404(res);
+    
+    if (path.match(/\.js/)) {
+        res.writeHead(200, {'Content-Type': 'text/javascript'});
+    } else if (path.match(/\.html/)) {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+    } else if (path.match(/\.css/)) {
+        res.writeHead(200, {'Content-Type': 'text/css'});
+    } else if (path.match(/\.png/)) {
+        res.writeHead(200, {'Content-Type': 'image/png'});
+    } else if (path.match(/\.jpg/)) {
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
+    } else if (path.match(/\.ico/)) {
+        res.writeHead(200, {'Content-Type': 'image/vnd.microsoft.icon'});
+    } else if (path.match(/\.woff/)) {
+        res.writeHead(200, {'Content-Type': 'application/x-font-woff'});
+    } else if (path.match(/\.eot/)) {
+        res.writeHead(200, {'Content-Type': 'application/vnd.ms-fontobject'});
+    } else if (path.match(/\.ttf/)) {
+        res.writeHead(200, {'Content-Type': 'font/ttf'});
+    } else if (path.match(/\.svg/)) {
+        res.writeHead(200, {'Content-Type': 'image/svg+xml'});
+    } else {
+      return send404(res);
+    }
+        
+    res.write(data, 'utf8');
+    res.end();
+  });
 });
-server.addListener("close", function( conn ) {
-	sys.puts( 'Closing Connection [id:' + conn.id + '] [time:' + Date.now() + ']' );
-	if ( stack.hasOwnProperty( conn.id ) ) {
-		delete stack[ conn.id ];
-	}
+
+slideshowServer.listen( Config.port );
+sys.puts('Client enabled at http://localhost:' + Config.port + '/');
+
+
+// set up socket.IO
+var io = io.listen(slideshowServer);
+io.sockets.on('connection', function(socket) {
+  sys.puts('Connection created [id:' + socket.id + '] [time:' + Date.now() + ']');
+
+  // when we receive a message, broadcast it to all sockets
+  socket.on('message', function(message) {
+    var msg = JSON.stringify(message);
+    sys.puts(msg);
+    socket.broadcast.send(msg);
+  });
+
+  socket.on('disconnect', function() {
+    sys.puts('Connection closed [id:' + socket.id + '] [time:' + Date.now() + ']');
+  });
 });
-server.listen( Config.port );
-sys.puts( 'Socket created on port ' + Config.port );
-
-
-
-
-/*
-	Server
-*/
-http.createServer(function( request, response ) {
-	var parts = request.url.split('?'), file = parts[ 0 ], query = querystring.parse( parts[ 1 ] || '' ), ret = {};
-
-	// Prevent backpeddling
-	if ( file.indexOf('../') > -1 ) {
-		response.writeHead( 400 );
-		response.end("Invalid Request");
-		return;
-	}
-	else if ( rdir.exec( file ) ) {
-		file += 'index.html';
-	}
-	else if ( rstart.exec( file ) ) {
-		file = '/' + file;
-	}
-
-
-	// Operations check
-	if ( query.op == 'config' ) {
-		Info.timeLeft = Info.timeEnd - Date.now();
-		response.writeHead( 200 );
-		response.end( JSON.stringify( Info ) );
-		return;
-	}
-	else if ( query.op == 'start-time' ) {
-		Info.timeEnabled = true;
-		Info.timeEnd = Date.now() + Config.timed;
-		Info.timeLeft = Info.timeEnd;
-		response.writeHead( 200 );
-		response.end( JSON.stringify( Info ) );
-		return;
-	}
-	else if ( query.op == 'next-slide' && ( Info.slide + 1 ) < Info.max ) {
-		ret.slide = ++Info.slide;
-	}
-	else if ( query.op == 'prev-slide' && Info.slide > 0 ) {
-		ret.slide = --Info.slide;
-	}
-	else if ( query.op == 'slide' && ( query.slide = parseInt( query.slide, 10 ) ) > -1 && query.slide < Info.max ) {
-		ret.slide = query.slide;
-	}
-
-
-	// Do slide transition if requested
-	if ( ret.slide !== undefined ) {
-		Info.slide = ret.slide;
-		for ( var i in stack ) {
-			if ( stack[ i ] ) {
-				stack[ i ].broadcast( JSON.stringify( ret ) );
-				stack[ i ].write( JSON.stringify( ret ) );
-				break;
-			}
-		}
-		Info.timeLeft = Info.timeEnd - Date.now();
-		response.writeHead( 200 );
-		response.end( JSON.stringify( Info ) );
-	}
-	// Sometimes operations cannot be be completed, 
-	// this is a fallback so full pages are downloaded on those requests
-	else if ( query.op ) {
-		response.writeHead( 200 );
-		response.end( JSON.stringify( Info ) );
-	}
-	else {
-		fs.readFile( __dirname + '/../master' + file, function( e, data ) {
-			if ( e ) {
-				sys.puts( 'Bad File Request - ' + e );
-				response.writeHead( 400 );
-				response.end("<h1>Bad Request</h1>");
-			}
-			else {
-				response.writeHead( 200 );
-				response.end( data );
-			}
-		});
-	}
-
-}).listen( Config.masterport );
-sys.puts('Master Controller Enabled at http://localhost:' + Config.masterport + '/' );
 
 
 /* Reading Max Slides */
 fs.readFile( __dirname + '/../' + Config.slideshowName + '/index.html', 'utf-8', function( e, data ) {
-	Info.max = data.match( /<section[> ]/g ).length;
-	sys.puts( Info.max + ' Slides');
+  Info.max = data.match( /<section[> ]/g ).length;
+  sys.puts( Info.max + ' Slides');
 });
